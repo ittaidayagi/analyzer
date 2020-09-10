@@ -1,0 +1,8 @@
+{"plugins": {
+              "tryplugin": {
+                            "name": "tryplugin",
+                            "short_flag": "-t",
+                            "long_flag": "--tryplugin"
+                            }
+            }
+}
