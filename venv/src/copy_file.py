@@ -3,6 +3,7 @@ import win32com.client
 import win32api
 import re
 import shutil
+import socket
 
 class files_utils():
 	"""
@@ -131,10 +132,28 @@ class files_utils():
 		except: return 1
 		else: return 0
 
-	def send_file(self, source, destination):
-
+	def send_file(self, source, destination, port=9999):
+		"""
+		Send the file given to a remote destination with socket
+		:param source: The source file
+		:param destination: The remote destination
+		:param port: The port to send
+		:return: None
+		"""
+		# Get the shadow copy path of the file
 		path = self.get_shadow_path(source)
-		# TODO: a module for sending with socket than use it here
+
+		# Read the content of the file
+		with open(path, "r") as source_path:
+			content = source_path.read()
+
+		# Connect to the remote destination
+		sock = socket.socket()
+		sock.connect((destination,port))
+
+		# Send the file
+		sock.send(content)
+
 
 	def __vss_delete(self, shadow_id):
 		"""
